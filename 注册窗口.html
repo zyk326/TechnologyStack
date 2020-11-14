@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        span {
+            font-size: 12px;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="localhost" id="form1" method="post">
+        <script type="text/javascript">
+            window.onload = function() {
+                var username_obj = document.getElementById("username");
+                //text empty
+                function text_empty(str) {
+                    if (str == "") {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+
+                function strLeg(regExp, str) {
+                    if (regExp.test(str)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                //username function
+                function username_fun() {
+                    var useString = username_obj.value;
+
+                    username_obj.onkeyup = function() {
+                        var useString = username_obj.value;
+                        var username_span = document.getElementById("userNameSpan");
+                        if (text_empty(useString)) {
+                            username_span.innerText = "用户名不能为空";
+                        } else {
+                            username_span.innerText = "";
+                        }
+
+                        //username used
+                        var regExp = /^[A-Za-z0-9]{6,14}$/;
+                        if (strLeg(regExp, useString)) {
+                            username_span.innerText = "";
+                        } else {
+                            if (useString.length < 6 || useString.length > 14) {
+                                username_span.innerText = "用户名长度在6-14之间";
+                            } else {
+                                username_span.innerText = "用户名只包含字母和数字";
+                            }
+
+                        }
+                    }
+                    if (text_empty(useString)) {
+                        var username_span = document.getElementById("userNameSpan");
+                        username_span.innerText = "用户名不能为空";
+                    }
+
+                }
+                //username empty
+                username_obj.onfocus = function() {
+                    username_fun();
+                    var doc = document.getElementById("userNameSpan").innerText;
+                    if (doc !== "") {
+                        document.getElementById("username").value = "";
+                    }
+                }
+
+                //password
+                var password_obj = document.getElementById("password");
+                var againpassword_obj = document.getElementById("againpassword");
+                againpassword_obj.onblur = function() {
+                    var passStr = password_obj.value;
+                    var agaStr = againpassword_obj.value;
+                    if (agaStr != passStr) {
+                        document.getElementById("againSpan").innerText = "密码不一致";
+                    } else {
+                        document.getElementById("againSpan").innerText = ""
+                    }
+                }
+                againpassword_obj.onfocus = function() {
+                    if (document.getElementById("againSpan").innerText != "") {
+                        againpassword_obj.value = ""
+                    }
+                    document.getElementById("againSpan").innerText = "";
+                }
+
+                //email
+                var email_obj = document.getElementById("email");
+                var email_regExp = /^[A-Za-z1-9]{1}[A-Za-z0-9]{0,}@\w+\.\w+$/;
+                email_obj.onblur = function() {
+                    var emailStr = email_obj.value;
+                    if (!strLeg(email_regExp, emailStr)) {
+                        document.getElementById("emailSpan").innerText = "email 不合法";
+                    } else {
+                        document.getElementById("emailSpan").innerText = ""
+                    }
+                }
+                document.getElementById("submit").onclick = function() {
+                    //alert("dfdfd")
+                    if (document.getElementById("userNameSpan").innerText == "" && document.getElementById("againSpan").innerText == "" && document.getElementById("emailSpan").innerText == "") {
+                        document.getElementById("submit").type = "submit";
+                    } else {
+                        //document.getElementById("form1").action = "";
+                        //document.getElementById("submit").disabled = "disabled";
+                        document.getElementById("submit").type = "button";
+                        document.getElementById("submit").value = "提交";
+
+                    }
+                }
+
+
+                //testbutton
+                // document.getElementById("testb").onclick = function() {
+                //     var buf = document.getElementById("userNameSpan").innerText
+                //     alert(buf)
+                //     alert(buf == "")
+                //     var buf1 = document.getElementById("againSpan").innerText
+                //     alert(buf1 == "")
+                //     var buf2 = document.getElementById("emailSpan").innerText
+                //     alert(buf2 == "")
+                //         // var formbb = document.getElementById("form1")
+                //         // alert(formbb.action);
+                //     document.getElementById("submit").disabled = "disabled";
+                // }
+                // document.getElementById("testb").ondblclick = function() {
+                //     // var buf = document.getElementById("userNameSpan").innerText
+                //     // alert(buf)
+                //     // alert(buf == "")
+                //     // var formbb = document.getElementById("form1")
+                //     // alert(formbb.action);
+                //     document.getElementById("submit").disabled = "";
+                // }
+            }
+        </script>
+
+        <!--<input type="button" id="testb" />-->
+        <!-- <table border="1px"> -->
+        <table>
+            <tr>
+                <td>
+                    username:
+                </td>
+                <td>
+                    <input type="text" name="username" id="username" />
+                </td>
+                <td>
+                    <span id="userNameSpan">&nbsp;</span>
+                </td>
+            </tr>
+            <tr>
+                <td>password:</td>
+                <td>
+                    <input type="text" name="password" id="password" />
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>againpassword:</td>
+                <td>
+                    <input type="text" name="againpassword" id="againpassword">
+                </td>
+                <td>
+                    <span id="againSpan">&nbsp;</span>
+                </td>
+            </tr>
+            <tr>
+                <td>email:</td>
+                <td>
+                    <input type="text" name="email" id="email">
+                </td>
+                <td>
+                    <span id="emailSpan">&nbsp;</span>
+                </td>
+            </tr>
+            <tr align="center">
+                <td colspan="2">
+                    <input type="submit" id="submit" />
+                    <input type="reset" id="reset">
+                </td>
+            </tr>
+        </table>
+        <pre>
+            <!-- <img src= "C:\Users\86955\FileFor86955\图片\各种壁纸\路\rode.jpg">sd</img> -->
+            <video src = "C:\Users\86955\Videos\Captures\tuanzhang-li.mp4" controls></video>
+        </pre>
+    </form>
+</body>
+
+</html>
