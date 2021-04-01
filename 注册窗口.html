@@ -11,12 +11,27 @@
             color: red;
         }
     </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
 </head>
 
 <body>
     <form action="localhost" id="form1" method="post">
         <script type="text/javascript">
+
+
             window.onload = function() {
+                
+            var bt = document.getElementById('vueget')
+            bt.onclick = function a(){
+                    window.alert('触发了函数a')
+                axios.get('http://www.hjmin.com/search?keywords=爸爸妈妈')
+                .then(response =>(
+                    console.log(response.data)
+                )
+                )
+            }
+
                 var username_obj = document.getElementById("username");
                 //text empty
                 function text_empty(str) {
@@ -141,6 +156,9 @@
                 //     document.getElementById("submit").disabled = "";
                 // }
             }
+
+            
+
         </script>
 
         <!--<input type="button" id="testb" />-->
@@ -199,7 +217,7 @@
 
         </form>
 
-
+        <input type="button" value = 'test' name = 'vueget' id = 'vueget'/>
 
          <!-- 2021/03/23 -->
          <!-- 外部链接 -->
